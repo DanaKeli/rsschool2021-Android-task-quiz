@@ -5,55 +5,123 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
+import com.rsschool.quiz.databinding.FragmentQuizBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [QuizFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class QuizFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _binding: FragmentQuizBinding? = null
+    private val binding get() = _binding!!
+    private var changePage: ChangePage? = null
+    private var array: Array<String?>? = null
+
+
+    private var choice: Int = -1
+    private var number: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            choice = it.getInt(ARG_CHOICE)
+            number = it.getInt(ARG_NUMBER_OF_QUESTION)
         }
+        changePage = context as ChangePage
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quiz2, container, false)
+    ): View {
+        _binding = FragmentQuizBinding.inflate(inflater)
+        binding.toolbar.title = "Question $number"
+        val questionArray = when (number) {
+            2 -> R.array.question_2
+            3 -> R.array.question_3
+            4 -> R.array.question_4
+            5 -> R.array.question_5
+            else -> R.array.question_1
+        }
+        array = resources.getStringArray(questionArray)
+        array?.let {
+            with(binding) {
+                question.text = it[0]
+                optionOne.text = it[1]
+                optionTwo.text = it[2]
+                optionThree.text = it[3]
+                optionFour.text = it[4]
+                optionFive.text = it[5]
+            }
+        }
+
+        return binding.root
+    }
+
+    private fun getItem(): Int {
+        val check = binding.radioGroup.checkedRadioButtonId
+        val item = binding.radioGroup.indexOfChild(activity?.findViewById(check))
+        return item
+    }
+
+    private fun setItem() {
+        if (choice in 0..4) {
+            binding.radioGroup.check(binding.radioGroup.getChildAt(choice).id)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setItem()
+        if (binding.radioGroup.checkedRadioButtonId < 0) {
+            binding.nextButton.isVisible = false
+        } else {
+            binding.nextButton.setOnClickListener {
+                changePage?.nextPage(getItem())
+            }
+        }
+        if (number == 1) {
+            binding.toolbar.navigationIcon = ResourcesCompat
+                .getDrawable(resources, android.R.drawable.menuitem_background, null)
+            binding.previousButton.isVisible = false
+        } else {
+            binding.previousButton.setOnClickListener {
+                changePage?.previousPage(getItem())
+            }
+            binding.toolbar.setNavigationOnClickListener {
+                changePage?.previousPage(getItem())
+            }
+        }
+        if (number == 5) {
+            binding.nextButton.text = getString(R.string.button_submit)
+        }
+
+        binding.radioGroup.setOnCheckedChangeListener { _, _ ->
+            binding.nextButton.isVisible = true
+            binding.nextButton.setOnClickListener {
+                changePage?.nextPage(getItem())
+            }
+
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment QuizFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(choice: Int, number: Int) =
             QuizFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(ARG_CHOICE, choice)
+                    putInt(ARG_NUMBER_OF_QUESTION, number)
                 }
             }
+        private const val ARG_CHOICE = "choice"
+        private const val ARG_NUMBER_OF_QUESTION = "numberOfQuestion"
     }
 }

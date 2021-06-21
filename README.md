@@ -47,3 +47,4 @@ Rolling Scopes School - Android 2021 - Stage 1 - Task 2 - Quiz
 - Форму для оценки задания по критериям ищите <a href="https://ziginsider.github.io/checklist/index.html">здесь</a> ⚡️
 
 Успехов! 🤞
+# rsschool2021-Android-task-quiz

@@ -1,3 +1,51 @@
 <resources>
     <string name="app_name">Quiz</string>
+    <string name="button_submit">Submit</string>
+    <string-array name="question_1">
+        <item>What is the capital of Australia?</item>
+        <item>Melbourne</item>
+        <item>Perth</item>
+        <item>Sydney</item>
+        <item>Canberra</item>
+        <item>Adelaide</item>
+    </string-array>
+
+    <string-array name="question_2">
+        <item>What is the largest city in Australia?</item>
+        <item>Adelaide</item>
+        <item>Sydney</item>
+        <item>Brisbane</item>
+        <item>Melbourne</item>
+        <item>Perth</item>
+    </string-array>
+
+    <string-array name="question_3">
+        <item>What is the population of Australia?</item>
+        <item>4 million</item>
+        <item>23 million</item>
+        <item>112 million</item>
+        <item>78 million</item>
+        <item>16 million</item>
+    </string-array>
+
+    <string-array name="question_4">
+        <item>What is the most famous building in Sydney?</item>
+        <item>Parliament House</item>
+        <item>Museum</item>
+        <item>Skyscraper</item>
+        <item>TV tower</item>
+        <item>Opera</item>
+    </string-array>
+
+    <string-array name="question_5">
+        <item>Who is the formal head of state in Australia?</item>
+        <item>President</item>
+        <item>Senator</item>
+        <item>Prime Minister</item>
+        <item>The Queen</item>
+        <item>People</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
+
