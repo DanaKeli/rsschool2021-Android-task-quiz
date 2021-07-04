@@ -72,11 +72,25 @@ class MainActivity : AppCompatActivity(), ChangePage, ResultFragment.Restart {
 
     private fun changeThem() {
        val them = when (question) {
-           1 -> R.style.Theme_Quiz_First
-           2 -> R.style.Theme_Quiz_Second
-           3 -> R.style.Theme_Quiz_Third
-           4 -> R.style.Theme_Quiz_Fourth
-           5 -> R.style.Theme_Quiz_Fifth
+           1 -> {
+               window.statusBarColor = ContextCompat.getColor(this, R.color.deep_orange_100_dark)
+               R.style.Theme_Quiz_First
+           }
+           2 -> {
+               window.statusBarColor = ContextCompat.getColor(this, R.color.yellow_100_dark)
+               R.style.Theme_Quiz_Second}
+           3 -> {
+               window.statusBarColor = ContextCompat.getColor(this, R.color.light_green_100_dark)
+               R.style.Theme_Quiz_Third
+           }
+           4 -> {
+               window.statusBarColor = ContextCompat.getColor(this, R.color.deep_purple_100_dark)
+               R.style.Theme_Quiz_Fourth
+           }
+           5 -> {
+               window.statusBarColor = ContextCompat.getColor(this, R.color.cyan_100_dark)
+               R.style.Theme_Quiz_Fifth
+           }
            else -> R.style.Theme_Quiz_First
        }
         theme.applyStyle(them, true)
